@@ -18,8 +18,8 @@
     // Detectar movimiento del pin
     marker.on('moveend',function(e){
        marker = e.target
-
-       const posicion = marker.getLatLng
+       const posicion = marker.getLatLng();
+       mapa.panTo(new L.LatLng(posicion.lat, posicion.lng));
     })
 
 })()
