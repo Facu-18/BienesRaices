@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Entorno
+.env
+
+# Directorios de construcción
+dist/
+build/
+
+# Archivos de configuración del editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Cobertura de pruebas
+coverage/
+
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
