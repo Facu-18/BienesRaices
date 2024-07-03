@@ -1,8 +1,7 @@
-import { DataTypes } from 'sequelize'
-import bcrypt from 'bcrypt'
-import db from '../config/db.js'
+import { DataTypes } from 'sequelize';
+import db from '../config/db.js';
 
-const Propiedad = db.define('Propiedades',{
+const Propiedad = db.define('Propiedades', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -13,27 +12,27 @@ const Propiedad = db.define('Propiedades',{
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    descripcion:{
+    descripcion: {
         type: DataTypes.TEXT,
         allowNull: false
     },
     habitaciones: {
-        type:DataTypes.INTERGER,
+        type: DataTypes.INTEGER,  // Corregido de INTERGER a INTEGER
         allowNull: false
     },
     estacionamiento: {
-        type:DataTypes.INTERGER,
+        type: DataTypes.INTEGER,  // Corregido de INTERGER a INTEGER
         allowNull: false
     },
     wc: {
-        type:DataTypes.INTERGER,
+        type: DataTypes.INTEGER,  // Corregido de INTERGER a INTEGER
         allowNull: false
     },
     calle: {
         type: DataTypes.STRING(60),
         allowNull: false
     },
-    lat :{
+    lat: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -42,14 +41,14 @@ const Propiedad = db.define('Propiedades',{
         allowNull: false
     },
     imagen: {
-       type: DataTypes.STRING,
-       allowNull: false
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    publicado:{
+    publicado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
     }
-})
+});
 
 export default Propiedad;

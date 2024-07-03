@@ -1,8 +1,7 @@
 import { DataTypes } from 'sequelize'
-import bcrypt from 'bcrypt'
 import db from '../config/db.js'
 
-const Categoria = db.define('Propiedades',{
+const Categoria = db.define('Categorias',{
    nombre:{
       type: DataTypes.STRING(30),
       allowNull: false
