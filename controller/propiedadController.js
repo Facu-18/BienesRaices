@@ -7,6 +7,8 @@ import { emailMensaje } from '../helpers/emails.js';
 
 const admin = async (req, res) => {
 
+   
+
   // Leer queryString
 
   const { pagina: paginaActual } = req.query
@@ -34,7 +36,8 @@ const admin = async (req, res) => {
         include: [
           { model: Categoria, as: 'categoria' },
           { model: Precio, as: 'precio' },
-          { model: Mensaje, as: 'mensajes'}
+          { model: Mensaje, as: 'mensajes'},
+          
         ],
       }),
       Propiedad.count({
@@ -44,7 +47,7 @@ const admin = async (req, res) => {
       })
     ])
 
-
+    
 
     res.render('propiedades/admin', {
       pagina: 'Mis Propiedades',
@@ -329,6 +332,37 @@ const eliminar = async (req, res) => {
 
 }
 
+// Modifica el estado de la propiedad
+const cambiarEstado = async (req,res)=>{
+  const { id } = req.params
+
+  // Validar que la propiedad exista
+  const propiedad = await Propiedad.findByPk(id)
+
+  if (!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // Revisar quien visita la URL es el dueño de la propiedad
+  if (propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // Actualizar
+  if(propiedad.publicado){
+    propiedad.publicado = 0
+  }
+  else{
+    propiedad.publicado = 1
+  }
+
+  await propiedad.save()
+
+  res.json({
+    resultado: 'ok'
+  })
+}
+
 
 // Muestra una propiedad
 
@@ -355,7 +389,6 @@ const mostrarPropiedad = async (req, res) => {
     propiedad,
     pagina: propiedad.titulo,
     csrfToken: req.csrfToken(),
-    usuario: req.usuario,
     esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId)
 
   })
@@ -373,7 +406,7 @@ const enviarMensaje = async(req,res)=>{
   })
 
 
-  if (!propiedad) {
+  if (!propiedad || !propiedad.publicado) {
     return res.redirect('/404')
   }
 
@@ -452,6 +485,7 @@ export {
   editar,
   guardarCambios,
   eliminar,
+  cambiarEstado,
   mostrarPropiedad,
   enviarMensaje,
   verMensajes

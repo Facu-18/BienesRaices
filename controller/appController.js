@@ -43,6 +43,7 @@ const inicio = async (req,res)=>{
         precios,
         casas,
         departamentos,
+        usuario: req.usuario ? req.usuario : null,
         csrfToken: req.csrfToken(),
     })
 }
