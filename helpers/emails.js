@@ -60,10 +60,34 @@ const emailOlvidePassword = async (datos) => {
 
 }
 
+const emailMensaje = async (datos) => {
+    const transport = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
 
+    const {email, nombre} = datos
+
+    // Enviar el mail
+    await transport.sendMail({
+        from: 'BienesRaices.com',
+        to: email,
+        subject: 'Recibiste un mensaje sobre tu publicacion en BienesRaices.com',
+        text:'Recibiste un mensaje sobre tu publicacion en BienesRaices.com',
+        html: `
+             <p>Hola ${nombre}, Recibiste un mensaje sobre tu publicacion en BienesRaices.com</p>
+        `
+    })
+
+}
 
 
 export {
     emailRegistro,
-    emailOlvidePassword
+    emailOlvidePassword,
+    emailMensaje
 }
