@@ -1,0 +1,24 @@
+extends ./layout/admin.pug
+
+block styles
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css")
+
+block contenido
+    div(class="max-w-4xl mx-auto mt-10")
+        h1(class="text-4xl font-bold mb-5 text-center")= pagina
+
+        div(class="bg-white shadow-md rounded-lg p-6")
+            h2(class="text-2xl font-semibold mb-4") Perfil de Usuario
+
+            p(class="text-lg") 
+                span(class="font-semibold") Nombre: 
+                | #{usuario.nombre}
+
+            p(class="text-lg mt-2") 
+                span(class="font-semibold") Email: 
+                | #{usuario.email}
+
+            p(class="text-lg mt-2") 
+                span(class="font-semibold") Propiedades: 
+                | #{propiedadesCount}
+

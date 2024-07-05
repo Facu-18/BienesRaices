@@ -3,8 +3,8 @@ import Usuario from '../models/Usuario.js'
 
 const identificarUsuario = async ( req,res, next )=>{
     // Identificar si hay un token en las cookies
-
-    const {_token} = req.cookies
+    
+    const {_token} = req.cookies 
     if(!_token){
         req.usuario = null
         return next();

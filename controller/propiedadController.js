@@ -389,6 +389,7 @@ const mostrarPropiedad = async (req, res) => {
     propiedad,
     pagina: propiedad.titulo,
     csrfToken: req.csrfToken(),
+    usuario: req.usuario,
     esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId)
 
   })
@@ -401,7 +402,8 @@ const enviarMensaje = async(req,res)=>{
   const propiedad = await Propiedad.findByPk(id, {
     include: [
       { model: Categoria, as: 'categoria' },
-      { model: Precio, as: 'precio' }
+      { model: Precio, as: 'precio' },
+      { model: Usuario, as: 'usuario'}
     ]
   })
 
@@ -439,7 +441,10 @@ const enviarMensaje = async(req,res)=>{
 
   })
   
-  
+  // Enviar el correo al propietario
+  const { email, nombre } = propiedad.usuario; // Obtén el email y nombre del propietario
+  await emailMensaje({ email, nombre, propiedadId });
+
   res.redirect('/')
   
 }
