@@ -13,6 +13,7 @@ const propiedades = async (req,res)=>{
     res.json(propiedades)
 }
 
+
 export{
     propiedades
 }
