@@ -5,7 +5,9 @@ import usuarioRoutes from './routes/usuarioRoutes.js';
 import propiedadRoutes from './routes/propiedadesRoutes.js'
 import appRoutes from './routes/appRoutes.js'
 import apiRoutes from './routes/apiRoutes.js'
+import perfilRoutes from './routes/perfilRoutes.js';
 import db from './config/db.js'
+import identificarUsuario from './middleware/identificarUsuario.js';
 
 // Crear la app...
 const app = express();
@@ -15,6 +17,7 @@ app.use( express.urlencoded({extended: true}) )
 
 // Habilitar cookie parser...
 app.use( cookieParser() )
+app.use(identificarUsuario);
 
 // Habilitar expressjson
 app.use(express.json());
@@ -44,6 +47,7 @@ app.use('/', appRoutes)
 app.use('/auth', usuarioRoutes)
 app.use('/', propiedadRoutes)
 app.use('/api', apiRoutes)
+app.use('/perfil', perfilRoutes)
 
 // Definir un puerto...
 const port = process.env.PORT || 8080;
