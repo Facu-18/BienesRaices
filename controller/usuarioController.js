@@ -8,6 +8,7 @@ import { emailRegistro } from '../helpers/emails.js';
 import { emailOlvidePassword } from '../helpers/emails.js';
 
 
+
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
         pagina: 'Iniciar Sesión',
@@ -74,7 +75,12 @@ const autenticar = async (req, res)=>{
         httpOnly: true,
         secure: true,
         sameSite: true
-    }).redirect('/mis-propiedades')
+    }).redirect('/')
+
+}
+
+const cerrarSesion = (req,res)=>{
+    return res.clearCookie('_token').status(200).redirect('/auth/login')
 
 }
 
@@ -143,6 +149,9 @@ const registrar = async (req, res) => {
 
     })
 
+  
+
+
     // Envia mail confirmacion...
     emailRegistro({
         nombre: usuario.nombre,
@@ -179,6 +188,7 @@ const confirmar = async (req, res) => {
     usuario.token = null;
     usuario.confirmados = true;
     await usuario.save();
+    
 
     res.render('auth/confirmar-cuenta', {
         pagina: 'Cuenta Confirmada',
@@ -314,6 +324,7 @@ const nuevoPassword = async (req, res) => {
 export {
     formularioLogin,
     autenticar,
+    cerrarSesion,
     formularioRegistro,
     registrar,
     confirmar,
